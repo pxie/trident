@@ -1,0 +1,6 @@
+{
+  "uaa": {
+    "clientid": "client",
+    "clientsecret": "secret"
+  }
+}

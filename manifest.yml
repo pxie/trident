@@ -1,0 +1,12 @@
+---
+applications:
+- name: trident
+  instances: 1
+  memory: 256M
+  disk_quota: 256M
+  random-route: true
+  stack: cflinuxfs2
+  buildpack: https://github.com/cloudfoundry/python-buildpack.git
+  services:
+  - demo-uaa
+  - demo-ts
