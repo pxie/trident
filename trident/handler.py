@@ -123,7 +123,7 @@ def build_message(item):
     for i in range(message_size):
         data_points.append([start_timestamp + step * i,
                             calc_datapoint(index), random.randint(0, 3)])
-    log.debug("message data points: %s", data_points)
+    # log.debug("message data points: %s", data_points)
     messageId = str(uuid.uuid4())
     message = {
         "messageId": messageId,
@@ -146,7 +146,7 @@ def calc_datapoint(index):
 def send_data(ws, item):
     message = build_message(item)
 
-    log.debug("Sending data: %s", message)
+    log.debug("Sending data...")
     ws.send(json.dumps(message))
 
     log.debug("Receiving...")
