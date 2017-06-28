@@ -114,7 +114,7 @@ def build_message(item):
     log.debug("build message. get item: %s", item)
     index, start_timestamp = item
 
-    message_size = 1         # each message size contains 1000 data points
+    message_size = 1000         # each message size contains 1000 data points
     two_years = 2 * 365 * 24 * 60 * 60 * 1000  # millionseconds
     jobs = 50
     step = int(two_years / jobs / message_size)
