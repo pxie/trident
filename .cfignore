@@ -92,3 +92,4 @@ ENV/
 py3rt/
 .vscode/
 tags
+__pycache__/

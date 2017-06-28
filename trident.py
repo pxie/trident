@@ -6,7 +6,7 @@ import base64
 
 # 3th party libs
 from flask import Flask
-from flask import request
+from flask import make_response, request
 
 from trident import logger
 log = logger.getLogger()
@@ -20,16 +20,27 @@ def index():
     env = os.environ.items
     log.debug("in index. %s" % env)
 
-    return json.dumps("Trident is the demo app to ingest time series data to Predix TimeSeries database<br/><br/>\
-                      Access https://github.com/pxie/trident.git for more info.")
+    return json.dumps("<h2>Intro</h2><br/>\
+                        Trident is the demo app to ingest time series data to Predix TimeSeries database<br/><br/>\
+                        Access <b>https://github.com/pxie/trident.git</b> for more info.")
 
 
 @app.route("/test", methods=['GET'])
 def test():
     log.debug("in /test")
-    handler.test_ingestion()
+    success, msg = handler.test()
+    if success:
+        status = 200
+    else:
+        status = 500
 
-    return "test"
+    return make_response(msg, status)
+
+
+@app.route("/ingest", methods=['GET'])
+def ingest():
+    log.debug("in /ingest")
+    return handler.ingest()
 
 if __name__ == "__main__":
 
