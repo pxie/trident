@@ -155,12 +155,12 @@ def send_data(ws, item):
 
 
 def ingest():
-    # async ingest 500,000 data points in last 2 years
+    # async ingest 50,000 data points in last 2 years
     p = Process(target=do_ingest)
     p.start()
 
     return "<h2>Notice</h2><br/>\
-            This task is started to async ingest 500,000 data points in last 2 years<br>\
+            This task is started to async ingest 50,000 data points in last 2 years<br>\
             Please run <b>'cf logs trident‘</b> to check whether task is finished."
 
 
