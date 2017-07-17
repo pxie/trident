@@ -51,9 +51,9 @@ buildpack: https://github.com/cloudfoundry/python-buildpack.git
 1. access above URL via browser, for example, https://trident-enoll-nonball.run.aws-jp01-pr.ice.predix.io
 2. access `/test` path, for example, https://trident-enoll-nonball.run.aws-jp01-pr.ice.predix.io/test
 3. if return message is `successfully ingest data.`, your configure are correct.
-4. if test failed, you can run `cf logs trident --recent` to retrieve trident logs on predix for trouble-shooting
+4. if test failed, you can run `cf logs trident --recent` to retrieve trident logs on predix for further trouble-shooting
 
-### Ingest 50,000 data points
+### Ingest 70,000 data points for last two years (every 15 minutes per datapoint)
 
 1. access `/ingest` path, for example, https://trident-enoll-nonball.run.aws-jp01-pr.ice.predix.io/ingest
 2. it will trigger an async process to ingest so many data points

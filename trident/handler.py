@@ -48,15 +48,14 @@ def test():
 
 def insert_queue():
     q = queue.Queue()
-    jobs = 50
-    now = int(round(time.time() * 1000))    # millionseconds
-    two_years_before = now - 2 * 365 * 24 * 60 * 60 * 1000
-    step = int(2 * 365 * 24 * 60 * 60 * 1000 / jobs)
+    jobs = 70
+    now = int(round(time.time())) * 1000    # millionseconds
+    step = 1000 * 60 * 15 * 1000     # 1000ms * 60s * 15minutes/datapoint * 1000 datapoints
 
     for item in range(jobs):
         log.debug("insert item: %s to queue.",
-                  (item, two_years_before + step * item))
-        q.put((item, two_years_before + step * item))
+                  (item, now - (step * item)))
+        q.put((item, now - (step * item)))
 
     log.debug("queue size: %d", q.qsize())
 
@@ -97,7 +96,7 @@ def do_ingest():
         t.join()
 
     duration = round(time.time() - now)
-    log.debug("it is finished to ingest 50,000 data points. it took %ds", duration)
+    log.debug("it is finished to ingest 70,000 data points. it took %ds", duration)
 
 
 def worker(ws, q):
@@ -115,13 +114,11 @@ def build_message(item):
     index, start_timestamp = item
 
     message_size = 1000         # each message size contains 1000 data points
-    two_years = 2 * 365 * 24 * 60 * 60 * 1000  # millionseconds
-    jobs = 50
-    step = int(two_years / jobs / message_size)
+    step = 1000 * 60 * 15      # 1000ms * 60s * 15 minutes
 
     data_points = []
     for i in range(message_size):
-        data_points.append([start_timestamp + step * i,
+        data_points.append([start_timestamp - step * i,
                             calc_datapoint(index), random.randint(0, 3)])
     # log.debug("message data points: %s", data_points)
     messageId = str(uuid.uuid4())
@@ -134,6 +131,7 @@ def build_message(item):
             }
         ]
     }
+    # log.debug("build message, message body: %s" % message)
 
     return message
 
@@ -155,12 +153,12 @@ def send_data(ws, item):
 
 
 def ingest():
-    # async ingest 50,000 data points in last 2 years
+    # async ingest 70,000 data points in last 2 years
     p = Process(target=do_ingest)
     p.start()
 
     return "<h2>Notice</h2><br/>\
-            This task is started to async ingest 50,000 data points in last 2 years<br>\
+            This task is started to async ingest 70,000 data points in last 2 years<br>\
             Please run <b>'cf logs trident‘</b> to check whether task is finished."
 
 
